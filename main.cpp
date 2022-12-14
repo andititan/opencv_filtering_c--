@@ -27,7 +27,7 @@ int main(){
     morphologyEx(full_mask, full_mask, MORPH_CLOSE, getStructuringElement(MORPH_RECT, Size(3, 3)));
 
     // Set up SimpleBlobDetector parameters.
-    cv::SimpleBlobDetector::Params params;
+    SimpleBlobDetector::Params params;
 
     params.filterByInertia = false;
     params.filterByConvexity = false;
@@ -46,14 +46,12 @@ int main(){
     params.minDistBetweenBlobs = 0.0f;
 
     // Perform the detection
-    cv::Ptr<cv::SimpleBlobDetector> detector = 
-    cv::SimpleBlobDetector::create(params);
-    std::vector<cv::KeyPoint> keypoints;
+    Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);
+    vector<KeyPoint> keypoints;
     detector->detect(full_mask, keypoints);
 
-    cv::Mat im_with_keypoints;
-    drawKeypoints(full_mask, keypoints, im_with_keypoints, cv::Scalar(0, 0, 255), 
-    cv::DrawMatchesFlags::DEFAULT);
+    Mat im_with_keypoints;
+    drawKeypoints(full_mask, keypoints, im_with_keypoints, Scalar(0, 255, 0), DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
 
     namedWindow("Original", WINDOW_AUTOSIZE );
     imshow("Original", image);
